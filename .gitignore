@@ -1,0 +1,7 @@
+*
+!scatterpie
+!scatterpie/*.py
+!.gitignore
+!LICENSE
+!README.md
+
