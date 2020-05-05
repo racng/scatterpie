@@ -1,8 +1,9 @@
 from typing import Union, Optional, Sequence, Any, Mapping, List, Tuple, Callable
+from collections.abc import Iterable
 import operator
+
 import numpy as np
 import pandas as pd
-from collections.abc import Iterable
 import matplotlib.pyplot as plt
 from matplotlib.axes import Axes
 
@@ -115,6 +116,8 @@ def get_palette(categories, cmap):
 
 def scatter_pie_from_df(
     df: pd.DataFrame,
+    x: str,
+    y: str,
     cols: Optional[list] = [],
     normalize: bool = True,
     return_df: bool = False,
@@ -126,9 +129,11 @@ def scatter_pie_from_df(
     Plot scatter pie based on columns in a DataFrame.
     
     Parameters:
-        df: Dataframe containing x, y, and additional count columns. 
+        df: Dataframe containing x, y, and additional count columns.
+        x: Column to use as x-values.
+        y: Column to use as y-values.
         cols: List of columns in dataframe to use as ratios and plotting. 
-            If [], uses all columns besides 'x' and 'y'.
+            If [], uses all columns besides x and y.
         normalize: If True, calculate ratios using selected columns. 
         return_df: If True, also return normalized dataframe.
         palette: Dictionary mapping column name to color. 
@@ -140,7 +145,7 @@ def scatter_pie_from_df(
         A :class:`~matplotlib.axes.Axes` and normalized df if `return_df` is True.
     """
     # make copy of dataframe and set xy as index
-    df = df.copy().set_index(["x", "y"])
+    df = df.copy().set_index([x, y])
     
     if (type(cols)==list) & (len(cols) > 1):
         # used specified list of columns
@@ -159,7 +164,7 @@ def scatter_pie_from_df(
     
     ratios =  df[categories].to_records(index=False).tolist()
     colors = [palette[cat] for cat in categories]
-    ax = scatter_pie(df.x, df.y, ratios, colors, **kwargs)
+    ax = scatter_pie(df[x].values, df[y].values, ratios, colors, **kwargs)
 
     # generate legend as separate figure 
     if return_df:
