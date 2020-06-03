@@ -100,7 +100,7 @@ def scatter_pie(
         for xy, s, color in zip(xys, ss, colors):
             # plot non-zero slices
             if s != 0:
-                ax.scatter(group.x, group.y, marker=(xy,0), s=[s*s*size], 
+                ax.scatter(group.x, group.y, marker=xy, s=[s*s*size], 
                     facecolor=color, edgecolor=edgecolor, **kwargs)
     return ax
 
