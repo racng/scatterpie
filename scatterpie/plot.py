@@ -171,5 +171,7 @@ def scatter_pie_from_df(
         return ax, df
     return ax
 
-
+def scatter_legend(ax, labels, palette, **kwargs):
+    handles = [plt.scatter([], [], color=palette[l], label=l) for l in labels]
+    ax.legend(handles=handles, **kwargs)
     
