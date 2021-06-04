@@ -174,4 +174,21 @@ def scatter_pie_from_df(
 def scatter_legend(ax, labels, palette, **kwargs):
     handles = [plt.scatter([], [], color=palette[l], label=l) for l in labels]
     ax.legend(handles=handles, **kwargs)
-    
+
+def expand_xlim(ax, percent=0.1):
+    lim = ax.get_xlim()
+    length = lim[1] - lim[0]
+    change = length * percent
+    lower = lim[0] - change
+    upper = lim[1] + change
+    ax.set_xlim(lower, upper)
+    return 
+
+def expand_ylim(ax, percent=0.1):
+    lim = ax.get_ylim()
+    length = lim[1] - lim[0]
+    change = length * percent
+    lower = lim[0] - change
+    upper = lim[1] + change
+    ax.set_ylim(lower, upper)
+    return 
